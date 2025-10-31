@@ -1,1 +1,251 @@
+/* ======================================================= */
+/* 1. Global Variables & Base Styles */
+/* ======================================================= */
+:root {
+    /* InaraWell Brand Colors */
+    --color-primary: #1C2E46; /* Dark Blue - Primary Text/Accent */
+    --color-secondary: #E3EEF7; /* Light Blue/Off-White - Secondary Accent/Highlight */
+    --color-background-light: #F7F7F0; /* From Logo Gradient */
+    --color-background-dark: #f5f5f5; /* From Footer Code */
+    --color-text-dark: #333;
+    --color-text-light: #555;
+    --color-link-hover: #0077b6; /* A clean blue for link hover */
+    --color-trigger-icon: #1C2E46; /* Using Primary color for the icon */
+}
+
+/* Base resets */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background-light);
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+/* Ensure the main content block pushes the footer down */
+#main-content {
+    min-height: 100vh;
+    padding-bottom: 50px; /* Optional: adds space above the footer on short pages */
+}
+
+
+/* ======================================================= */
+/* 2. 🍔 Floating Overlay Navigation System (CSS) */
+/* ======================================================= */
+
+/* A. The Floating Overlay Icon (Trigger) - Top-Right Corner */
+.floating-icon {
+    /* Fixed position, offset from edge (Requirement) */
+    position: fixed;
+    top: 20px; 
+    right: 20px;
+    z-index: 1000; /* Always on top */
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary); /* Dark Blue button */
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Icon (Two-Slash Modern Style) */
+.floating-icon::before,
+.floating-icon::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    background-color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Top slash */
+.floating-icon::before {
+    transform: translateY(-5px) rotate(20deg); /* Modern slant */
+}
+
+/* Bottom slash */
+.floating-icon::after {
+    transform: translateY(5px) rotate(-20deg); /* Modern slant */
+}
+
+/* State when icon is hidden (for JS scroll control) */
+.floating-icon.hidden {
+    opacity: 0;
+    transform: translateY(-60px); 
+}
+
+
+/* B. The Navigation Menu (Overlay) */
+.nav-overlay {
+    /* Full-screen design (Requirement) */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary); /* Dark Blue background */
+    color: white;
+    z-index: 999; 
+    /* Starts invisible (off-screen) */
+    transform: translateX(100%); 
+    transition: transform 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Active state */
+.nav-overlay.active {
+    transform: translateX(0);
+}
+
+.overlay-content {
+    padding: 20px;
+}
+
+.overlay-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.overlay-content ul li {
+    margin: 25px 0;
+}
+
+.overlay-content ul a {
+    color: white;
+    text-decoration: none;
+    font-size: 2.5rem;
+    font-weight: 600;
+    transition: color 0.2s;
+    /* Hide logo (Requirement) - Logo is NOT part of the menu */
+}
+
+.overlay-content ul a:hover {
+    color: var(--color-secondary);
+}
+
+/* Close Button (X) */
+#close-nav {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* Close button transformation when menu is open (for simple slide-out animation) */
+.nav-overlay.active #close-nav {
+    transform: rotate(0deg); 
+}
+
+/* Close button transformation when menu closes - Simple Slide Out (User's choice: Simple Slide) */
+.nav-overlay #close-nav {
+    transform: rotate(90deg); /* Simple visual effect on close */
+}
+
+
+/* ======================================================= */
+/* 3. 🦶 Standardized Footer Component (CSS) */
+/* ======================================================= */
+/* Using your provided CSS, modified slightly for variable consistency */
+
+.footer {
+  background-color: var(--color-background-dark); /* #f5f5f5 */
+  padding: 60px 20px;
+  color: var(--color-text-dark); /* #333 */
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  /* Use Grid for multi-column structure (Requirement) */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.footer-section h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--color-primary); /* #1c2e46 */
+}
+
+.footer-section p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-light); /* #555 */
+}
+
+.footer-logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary); /* #1c2e46 */
+  margin-bottom: 10px;
+}
+
+.footer-links-group a,
+.contact-btn-group a {
+  display: block;
+  color: var(--color-text-light); /* #555 */
+  font-size: 15px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-links-group a:hover,
+.contact-btn-group a:hover,
+.social-links a:hover { /* Combined hover for consistency */
+  color: var(--color-link-hover); /* #0077b6 */
+}
+
+.social-links {
+  margin-top: 15px;
+}
+
+.social-links a {
+  font-size: 22px;
+  color: var(--color-text-light); /* #555 */
+  margin-right: 15px;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  color: #777;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+/* Mobile Responsiveness for Footer */
+@media (max-width: 768px) {
+    .footer-container {
+        /* On smaller screens, stack the columns */
+        grid-template-columns: 1fr;
+    }
+    .footer-section {
+        margin-bottom: 20px;
+    }
+}
 
