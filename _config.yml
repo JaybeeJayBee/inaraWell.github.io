@@ -1,0 +1,5 @@
+# InaraWell.com Configuration
+title: InaraWell
+description: Your Self-Help Agency for Growth and Clarity
+remote_theme: jekyll/minima
+show_excerpts: true
