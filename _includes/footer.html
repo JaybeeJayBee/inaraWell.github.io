@@ -1,1 +1,51 @@
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-section">
+      <div class="footer-logo">InaraWell.com</div>
+      <p>Empowering you to live a more fulfilling life through self-help resources and guidance.</p>
 
+      <div class="social-links">
+        <a href="https://youtube.com/@inarawell" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/inarawell?igsh=dGp3YXdlcmMxZWl0" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/@inarawell" target="_blank" aria-label="Threads"><i class="fab fa-threads"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Legal</h4>
+      <div class="footer-links-group">
+        <a href="/policies.html">Privacy Policy</a>
+        <a href="/policies.html">Terms and Refund Policy</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <div class="footer-links-group">
+        <a href="/creations.html">Our Creations Showcase</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h4>Contact Us</h4>
+      <div class="contact-btn-group">
+        <a href="/contact-us.html">Contact Us</a>
+        <a href="mailto:care@inarawell.com">Our Gmail</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© <span id="currentYear"></span> InaraWell. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const currentYearSpan = document.getElementById("currentYear");
+    if (currentYearSpan) {
+      currentYearSpan.textContent = new Date().getFullYear();
+    }
+  });
+</script>
