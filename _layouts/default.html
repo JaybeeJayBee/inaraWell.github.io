@@ -8,7 +8,7 @@ layout: null
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title | default: site.title }} - {{ site.description }}</title>
     
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
 
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/bMgw0WCF/Smart-Select-20251001-110956-Gallery.jpg">
 
@@ -29,6 +29,6 @@ layout: null
     
     {% include footer.html %}
 
-    <script src="/script.js"></script>
+    <script src="{{ '/script.js' | relative_url }}"></script>
 </body>
 </html>
