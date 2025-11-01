@@ -1,122 +1,42 @@
-<style>
-.footer {
-  background-color: #f5f5f5;
-  padding: 60px 20px;
-  color: #333;
-  font-family: "Poppins", sans-serif;
-}
+<footer id="global-footer">
+    <div class="footer-container">
+        
+        <div class="footer-section footer-branding">
+            <h3>Your Agency Name</h3>
+            <p class="tagline">Empowering your personal and professional growth.</p>
+            <div class="social-links">
+                <a href="#" aria-label="LinkedIn"><i class="icon-linkedin"></i></a>
+                <a href="#" aria-label="Twitter"><i class="icon-twitter"></i></a>
+            </div>
+        </div>
 
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 40px;
-}
+        <div class="footer-section footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="reviews.html">Success Stories</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </div>
 
-.footer-section h4 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #1c2e46;
-}
+        <div class="footer-section footer-legal">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="cookies.html">Cookie Policy</a></li>
+            </ul>
+        </div>
 
-.footer-section p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: #555;
-}
-
-.footer-logo {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1c2e46;
-  margin-bottom: 10px;
-}
-
-.footer-links-group a,
-.contact-btn-group a {
-  display: block;
-  color: #555;
-  font-size: 15px;
-  text-decoration: none;
-  margin-bottom: 10px;
-  transition: all 0.3s ease;
-}
-
-.footer-links-group a:hover,
-.contact-btn-group a:hover {
-  color: #0077b6;
-}
-
-.social-links {
-  margin-top: 15px;
-}
-
-.social-links a {
-  font-size: 22px;
-  color: #555;
-  margin-right: 15px;
-  transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-  color: #0077b6;
-}
-
-.footer-bottom {
-  text-align: center;
-  margin-top: 40px;
-  font-size: 14px;
-  color: #777;
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-}
-</style>
-
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-section">
-      <div class="footer-logo">InaraWell.com</div>
-      <p>Empowering you to live a more fulfilling life through self-help resources and guidance.</p>
-
-      <div class="social-links">
-        <a href="https://youtube.com/@inarawell" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/inarawell?igsh=dGp3YXdlcmMxZWl0" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.threads.net/@inarawell" target="_blank" aria-label="Threads"><i class="fab fa-threads"></i></a>
-      </div>
+        <div class="footer-section footer-contact">
+            <h4>Contact Us</h4>
+            <p>Email: hello@youragency.com</p>
+            <p>Phone: (555) 123-4567</p>
+            <address>123 Growth Lane, Suite 400, Clarity City, TX 78701</address>
+        </div>
     </div>
-
-    <div class="footer-section">
-      <h4>Legal</h4>
-      <div class="footer-links-group">
-        <a href="https://www.inarawell.com/policies">Privacy Policy</a>
-        <a href="https://www.inarawell.com/policies">Terms and Refund Policy</a>
-      </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 Your Agency Name. All rights reserved.</p>
     </div>
-
-    <div class="footer-section">
-      <h4>Quick Links</h4>
-      <div class="footer-links-group">
-        <a href="https://www.inarawell.com/our-creations-showcase">Our Creations Showcase</a>
-        <a href="https://www.inarawell.com/faq">FAQ</a>
-      </div>
-    </div>
-
-    <div class="footer-section">
-      <h4>Contact Us</h4>
-      <div class="contact-btn-group">
-        <a href="https://www.inarawell.com/contact-us">Contact Us</a>
-        <a href="mailto:care@inarawell.com">Our Gmail</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© <span id="currentYear"></span> InaraWell. All rights reserved.</p>
-  </div>
 </footer>
-
-<script>
-  document.getElementById("currentYear").textContent = new Date().getFullYear();
-    </script>
