@@ -1,161 +1,254 @@
-/* ======================================================= */
-/* 1. Global Variables & Base Styles */
-/* ======================================================= */
+/* --- CSS VARIABLES (Brand Colors) --- */
 :root {
-    /* InaraWell Brand Colors */
-    --color-primary: #1C2E46; /* Dark Blue - Primary Text/Accent */
-    --color-secondary: #E3EEF7; /* Light Blue/Off-White - Secondary Accent/Highlight */
-    --color-background-light: #F7F7F0; /* From Logo Gradient */
-    --color-background-dark: #f5f5f5; /* From Footer Code */
+    /* Agency Brand Colors */
+    --brand-dark-blue: #1C2E46; /* Primary Text/Accent */
+    --brand-light-blue: #E3EEF7; /* Secondary Accent/Backgrounds */
+
+    /* General Colors */
     --color-text-dark: #333;
-    --color-text-light: #555;
-    --color-link-hover: #0077b6; /* A clean blue for link hover */
-    --color-trigger-icon: #1C2E46; /* Using Primary color for the icon */
+    --color-text-light: #f4f4f4;
+    --color-background-main: #ffffff;
+    --color-shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Base resets */
-body {
-    font-family: 'Poppins', sans-serif;
+/* --- BASE STYLES --- */
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: var(--color-background-light);
-    color: var(--color-text-dark);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional, Techy Font */
     line-height: 1.6;
+    color: var(--color-text-dark);
+    background-color: var(--color-background-main);
+    padding-top: 2rem; /* Give space for floating icon */
 }
 
-/* Ensure the main content block pushes the footer down */
-#main-content {
-    min-height: 100vh;
-    padding-bottom: 50px; /* Optional: adds space above the footer on short pages */
+a {
+    color: var(--brand-dark-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
+a:hover {
+    color: var(--brand-light-blue);
+}
 
-/* ======================================================= */
-/* 2. 🍔 Floating Overlay Navigation System (CSS) */
-/* ======================================================= */
+#page-content {
+    min-height: 80vh; /* Ensure footer is pushed down */
+    padding: 0 4%;
+}
 
-/* A. The Floating Overlay Icon (Trigger) - Top-Right Corner */
-.floating-icon {
-    /* Fixed position, offset from edge (Requirement) */
+/* --- 🍔 FLOATING NAVIGATION STYLES --- */
+
+/* 2A. The Floating Overlay Icon (Trigger) */
+#nav-trigger-btn {
     position: fixed;
-    top: 20px; 
-    right: 20px;
-    z-index: 1000; /* Always on top */
+    top: 25px;
+    right: 25px;
     width: 50px;
     height: 50px;
-    background-color: var(--color-primary); /* Dark Blue button */
+    background-color: var(--brand-dark-blue);
     border: none;
     border-radius: 50%;
+    z-index: 1000;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px var(--color-shadow);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Icon (Two-Slash Modern Style) */
-.floating-icon::before,
-.floating-icon::after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 3px;
-    background-color: white;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Top slash */
-.floating-icon::before {
-    transform: translateY(-5px) rotate(20deg); /* Modern slant */
-}
-
-/* Bottom slash */
-.floating-icon::after {
-    transform: translateY(5px) rotate(-20deg); /* Modern slant */
-}
-
-/* State when icon is hidden (for JS scroll control) */
-.floating-icon.hidden {
+#nav-trigger-btn.hidden {
     opacity: 0;
-    transform: translateY(-60px); 
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+
+.hamburger-icon {
+    width: 60%;
+    height: 60%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.bar {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background: var(--color-text-light);
+    border-radius: 5px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 
-/* B. The Navigation Menu (Overlay) */
-.nav-overlay {
-    /* Full-screen design (Requirement) */
+/* 2B. The Navigation Menu (Overlay) */
+#full-overlay-nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-primary); /* Dark Blue background */
-    color: white;
-    z-index: 999; 
-    /* Starts invisible (off-screen) */
-    transform: translateX(100%); 
-    transition: transform 0.4s ease-in-out;
+    background-color: var(--brand-dark-blue); /* Dark full background */
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-100%);
+    transition: opacity 0.4s, visibility 0s 0.4s, transform 0.4s ease-in-out;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+#full-overlay-nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.4s, visibility 0s 0s, transform 0.4s ease-in-out;
+}
+
+.nav-content-wrapper {
     text-align: center;
+    padding: 2rem;
 }
 
-/* Active state */
-.nav-overlay.active {
-    transform: translateX(0);
+#nav-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    background: transparent;
+    border: none;
+    color: var(--color-text-light);
+    font-size: 3rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: opacity 0.3s ease;
 }
 
-.overlay-content {
-    padding: 20px;
-}
-
-.overlay-content ul {
+.nav-links-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.overlay-content ul li {
-    margin: 25px 0;
+.nav-links-list li {
+    margin: 20px 0;
+    opacity: 0; /* Animated via JS */
+    transform: translateY(20px); /* Animated via JS */
 }
 
-.overlay-content ul a {
-    color: white;
-    text-decoration: none;
+.nav-links-list li a {
+    color: var(--brand-light-blue);
     font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.nav-links-list li a:hover {
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.overlay-note {
+    margin-top: 3rem;
+    padding: 1rem 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.overlay-note p {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+
+
+/* --- 🦶 STANDARDIZED FOOTER STYLES --- */
+#global-footer {
+    background-color: var(--brand-dark-blue);
+    color: var(--color-text-light);
+    padding: 3rem 4%;
+    margin-top: 4rem;
+    font-size: 0.95rem;
+}
+
+.footer-container {
+    display: grid;
+    /* Professional, responsive multi-column layout using Grid */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-section h4, .footer-section h3 {
+    color: var(--brand-light-blue);
+    margin-bottom: 1rem;
     font-weight: 600;
-    transition: color 0.2s;
-    /* Hide logo (Requirement) - Logo is NOT part of the menu */
 }
 
-.overlay-content ul a:hover {
-    color: var(--color-secondary);
+.footer-section ul {
+    list-style: none;
 }
 
-/* Close Button (X) */
-#close-nav {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 40px;
-    height: 40px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: transform 0.3s;
+.footer-section li {
+    margin-bottom: 0.5rem;
 }
 
-/* Close button transformation when menu is open (for simple slide-out animation) */
-.nav-overlay.active #close-nav {
-    transform: rotate(0deg); 
+.footer-section a {
+    color: var(--color-text-light);
+    transition: color 0.3s;
 }
 
-/* Close button transformation when menu closes - Simple Slide Out (User's choice: Simple Slide) */
-.nav-overlay #close-nav {
-    transform: rotate(90deg); /* Simple visual effect on close */
+.footer-section a:hover {
+    color: var(--brand-light-blue);
+}
+
+.footer-branding .tagline {
+    font-style: italic;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+/* --- Content Section Placeholder for Vibe Coder (Step 2) --- */
+/* Add all your new page-specific styles below this line. */
+
+/* EXAMPLE FOR INDEX.HTML CONTENT */
+#hero-section {
+    background-color: var(--brand-light-blue);
+    padding: 5rem 0;
+    text-align: center;
+}
+
+#hero-section h1 {
+    font-size: 3rem;
+    color: var(--brand-dark-blue);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .nav-links-list li a {
+        font-size: 1.8rem;
     }
+    #page-content {
+        padding: 0 5%;
+    }
+}
