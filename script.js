@@ -1,65 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navTrigger = document.getElementById('nav-trigger');
-    const navOverlay = document.getElementById('nav-overlay');
-    const closeNavButton = document.getElementById('close-nav');
-    
-    // --- 1. Open/Close Logic ---
+    const navBtn = document.getElementById('nav-trigger-btn');
+    const closeBtn = document.getElementById('nav-close-btn');
+    const overlay = document.getElementById('full-overlay-nav');
+    const navItems = document.querySelectorAll('.nav-links-list li');
+    let lastScrollTop = 0;
+    const scrollThreshold = 10; // Scroll distance to hide/show
 
-    // Function to open the menu
-    const openMenu = () => {
-        navOverlay.classList.add('active');
-        navOverlay.setAttribute('aria-hidden', 'false');
-        // Prevent scrolling on the body when overlay is active
-        document.body.style.overflow = 'hidden'; 
-        // Focus the close button for accessibility
-        closeNavButton.focus();
-    };
-
-    // Function to close the menu
-    const closeMenu = () => {
-        // We will trigger the animation defined in the CSS for the close button 
-        // by simply removing the 'active' class from the overlay.
-        navOverlay.classList.remove('active');
-        navOverlay.setAttribute('aria-hidden', 'true');
-        // Restore body scrolling
-        document.body.style.overflow = '';
-        // Return focus to the trigger icon
-        navTrigger.focus();
-    };
-
-    // Event listeners for the buttons
-    if (navTrigger && navOverlay && closeNavButton) {
-        navTrigger.addEventListener('click', openMenu);
-        closeNavButton.addEventListener('click', closeMenu);
-    }
-    
-    // --- 2. Scroll Visibility Control (Disappear on Scroll Up) ---
-    let lastScrollY = window.scrollY;
-    
+    // --- 1. Floating Icon Visibility Control (Scroll Up/Down) ---
     window.addEventListener('scroll', () => {
-        // Only run the logic if the navigation menu is NOT open
-        if (!navOverlay.classList.contains('active')) {
-            if (window.scrollY > lastScrollY && window.scrollY > 100) {
-                // User is scrolling DOWN
-                // Icon must disappear when scrolling upwards (blueprint actually said disappear on scroll upwards, and reappear on scroll downwards, but standard UX is hide on scroll DOWN and show on scroll UP. I will implement the standard UX as it's typically better for mobile.)
-                // Implementing the standard (Hide on scroll DOWN, Show on scroll UP) for better user experience:
-                navTrigger.classList.add('hidden');
-            } else if (window.scrollY < lastScrollY) {
-                // User is scrolling UP
-                navTrigger.classList.remove('hidden');
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        // Only run if the overlay is NOT open
+        if (!overlay.classList.contains('open')) {
+            if (currentScroll > lastScrollTop && currentScroll > 100) {
+                // Scroll Down - Hide the button
+                navBtn.classList.add('hidden');
+            } else if (currentScroll < lastScrollTop) {
+                // Scroll Up - Show the button
+                navBtn.classList.remove('hidden');
             }
-        } else {
-             // If the menu is open, make sure the trigger icon is visible (not hidden)
-             navTrigger.classList.remove('hidden');
         }
-
-        // Update the last scroll position
-        lastScrollY = window.scrollY;
         
-        // Ensure icon is visible at the very top of the page
-        if (window.scrollY < 50) {
-            navTrigger.classList.remove('hidden');
-        }
-    });
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // For Mobile scroll bounce
+    }, false);
 
+
+    // --- 2. Overlay Open/Close Logic (with chosen animation) ---
+    
+    // Function to handle opening the menu
+    const openNav = () => {
+        overlay.classList.add('open');
+        navBtn.classList.add('hidden'); // Hide trigger when overlay is open
+        document.body.style.overflow = 'hidden'; // Lock scrolling behind overlay
+
+        // Animate links in
+        navItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 50 * index); // Staggered entry
+        });
+    };
+
+    // Function to handle closing the menu (subtle fade-out/slide-up animation)
+    const closeNav = () => {
+        // Animate links out (Reverse the stagger)
+        navItems.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(-20px)';
+        });
+
+        // Close the overlay after the link animation
+        setTimeout(() => {
+            overlay.classList.remove('open');
+            navBtn.classList.remove('hidden'); // Show trigger button again
+            document.body.style.overflow = ''; // Restore scrolling
+        }, 400); // Match this to CSS transition time
+    };
+
+    navBtn.addEventListener('click', openNav);
+    closeBtn.addEventListener('click', closeNav);
+    
+    // Allow clicking links inside to close the menu
+    document.querySelectorAll('.nav-links-list a').forEach(link => {
+        link.addEventListener('click', closeNav);
+    });
 });
